@@ -25,14 +25,17 @@ The goal is to evaluate how accurately arrival delay can be predicted using avai
 
 ├── lr_model.py                  # Linear Regression training script
 ├── rf_model.py                  # Random Forest training script
+├── xgb_model.py                 # XGBRegressor training script
 ├── predict_delay.py             # Script to predict arrival delay using trained models
 
 
 ├── lr_metrics.txt               # Evaluation metrics for Linear Regression
 ├── rf_metrics.txt               # Evaluation metrics for Random Forest
+├── xgb_metrics.txt              # Evaluation metrics for XGBRegressor
 
 ├── residual_plot_lr.png         # Residual plot for Linear Regression
 ├── residual_plot_rf.png         # Residual plot for Random Forest
+├── residual_plot_xgb.png        # Residual plot for XGBRegressor
 
 └── README.md                    # Project documentation
 ```
@@ -126,11 +129,37 @@ Outputs:
 
 An ensemble machine learning model that improves prediction accuracy by combining multiple decision trees.
 
+Metrics evaluated:
+
+* MAE (Mean Absolute Error)
+* MSE (Mean Squared Error)
+* RMSE (Root Mean Squared Error)
+* R² Score
+
 Outputs:
 
 * `rf_model.pkl`
 * `rf_metrics.txt`
 * `residual_plot_rf.png`
+
+---
+
+## XGBoost Regressor 
+
+An ensemble machine learning algorithm used for regression tasks that predicts continuous values by sequentially building multiple decision trees, where each new tree corrects the errors made by the previous ones using gradient boosting.
+
+Metrics evaluated:
+
+* MAE (Mean Absolute Error)
+* MSE (Mean Squared Error)
+* RMSE (Root Mean Squared Error)
+* R² Score
+
+Outputs:
+
+* `xgb_model.pkl`
+* `xgb_metrics.txt`
+* `residual_plot_xgb.png`
 
 ---
 
@@ -192,7 +221,21 @@ Outputs:
 
 ---
 
-## 3. Predict Arrival Delay
+## 3. Train XGBoost Regressor Model
+
+```
+python xgb_model.py
+```
+
+Outputs:
+
+* Model file
+* Metrics file
+* Residual plot
+
+---
+
+## 4. Predict Arrival Delay
 
 ```
 python predict_delay.py

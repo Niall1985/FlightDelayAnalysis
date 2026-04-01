@@ -1,22 +1,29 @@
 import pandas as pd
 import joblib
 
+# Load trained models
 lr_model = joblib.load('lr_model.pkl')
 rf_model = joblib.load('rf_model.pkl')
+xgb_model = joblib.load('xgb_model.pkl')
 
-sample = pd.DataFrame([[
-2015,2,21,2,3,45,12,830,845,15,120,900,1030,1045,0,0,5,0,7,2,0,33.94,-118.40
-]], columns=[
-'YEAR','MONTH','DAY','DAY_OF_WEEK','AIRLINE','ORIGIN_AIRPORT',
-'DESTINATION_AIRPORT','SCHEDULED_DEPARTURE','DEPARTURE_TIME',
-'DEPARTURE_DELAY','SCHEDULED_TIME','DISTANCE','SCHEDULED_ARRIVAL',
-'ARRIVAL_TIME','DIVERTED','CANCELLED','AIR_SYSTEM_DELAY',
-'SECURITY_DELAY','AIRLINE_DELAY','LATE_AIRCRAFT_DELAY',
-'WEATHER_DELAY','LATITUDE','LONGITUDE'
-])
+input_file = "flight_delay_sample_inputs.csv"
+df = pd.read_csv(input_file)
 
-prediction_lr = lr_model.predict(sample)
-print("Linear Regression based predicted delay: ", round(prediction_lr[0]), "minutes")
+lr_predictions = lr_model.predict(df)
+rf_predictions = rf_model.predict(df)
+xgb_predictions = xgb_model.predict(df)
 
-prediction_rf = rf_model.predict(sample)
-print("Random Forest based predicted delay: ", round(prediction_rf[0]), "minutes")
+df["LR_PREDICTED_DELAY"] = lr_predictions.round()
+df["RF_PREDICTED_DELAY"] = rf_predictions.round()
+df["XGB_PREDICTED_DELAY"] = xgb_predictions.round()
+
+output_file = "flight_delay_predictions.csv"
+df.to_csv(output_file, index=False)
+
+print("Predictions saved to:", output_file)
+
+for i in range(len(df)):
+    print(f"\nFlight {i+1}")
+    print("Linear Regression Delay:", round(lr_predictions[i]), "minutes")
+    print("Random Forest Delay:", round(rf_predictions[i]), "minutes")
+    print("XGBoost Delay:", round(xgb_predictions[i]), "minutes")
