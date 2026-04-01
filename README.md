@@ -8,6 +8,7 @@ Two models are implemented:
 
 * **Linear Regression**
 * **Random Forest Regressor**
+* **XGBoost Regressor**
 
 The goal is to evaluate how accurately arrival delay can be predicted using available flight features.
 
