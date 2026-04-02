@@ -1,10 +1,11 @@
 import pandas as pd
 import joblib
 
-# Load trained models
+
 lr_model = joblib.load('lr_model.pkl')
 rf_model = joblib.load('rf_model.pkl')
 xgb_model = joblib.load('xgb_model.pkl')
+
 
 input_file = "flight_delay_sample_inputs.csv"
 df = pd.read_csv(input_file)
